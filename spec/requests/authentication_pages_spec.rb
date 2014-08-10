@@ -5,10 +5,12 @@ describe "Authentication" do
   subject { page }
 
   describe "signin" do
-    before { visit signin_path }
 
     describe "with invalid information" do
-      before { click_button "Sign in" }
+      before do
+        visit signin_path
+        click_button "Sign in"
+      end
 
       it { should have_title('Sign in') }
       it { should have_error_message('Invalid') }
@@ -25,7 +27,7 @@ describe "Authentication" do
 
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
-      before { valid_signin(user) }
+      before { sign_in(user) }
 
       it { should have_title(user.name) }
       it { should have_link('Users',       href: users_path) }
